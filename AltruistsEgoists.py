@@ -16,9 +16,21 @@ class altruistEgoistSim2D:
 			else:
 				nType = 'E'
 			simGraph.add_node(nType)
-		return simGraph
+			simGraph.connectNodes(simGraph)
+			self.getnodes = simGraph.nodes
+			isEdges =[]
+			for node in simGraph.nodes:
+				if len(node.edges)>0:
+					isEdges.append(True)
+			self.getEdges = isEdges
 
-	
+				
+
+			#simGraph = self.connectNodes(simGraph)
+		
+
+	#def printNodesEdges():
+
 
 	#def  runSim(self,  epochs):
 		#Calls calc epoch 

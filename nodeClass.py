@@ -12,6 +12,8 @@ class node:
         if type(willChange) == 'boolean':
             self.willChange = willChange
 
+        self.edges =[]
+
         pass
 
     def updateType(self, newType):

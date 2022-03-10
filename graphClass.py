@@ -32,3 +32,13 @@ class graph:
             return True
         else:
             return False
+
+    def get_neighbors(self, node): 
+        return node.edges
+
+    def connectNodes(self, simGraph):
+        #numEdges = randint(len(simGraph),(len(simGraph)**2)
+        for i in range(len(simGraph.nodes)):
+            for j in range(len(simGraph.nodes)):
+                if i!=j:
+                    simGraph.add_edge(simGraph.nodes[i],simGraph.nodes[j])
