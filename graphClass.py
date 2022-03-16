@@ -1,13 +1,14 @@
 #import node class from nodeClass.py
 from nodeClass import node
+import random
 
 class graph: 
    
     def __init__(self, nodes=[]):
         self.nodes = nodes
 
-    def add_node(self, nType):
-        newNode = node(nType, 0, False)
+    def add_node(self,label, nType):
+        newNode = node(label,nType, 0, False)
         self.nodes.append(newNode)
 
     def add_edge(self, node1, node2):
@@ -36,9 +37,10 @@ class graph:
     def get_neighbors(self, node): 
         return node.edges
 
-    def connectNodes(self, simGraph):
-        #numEdges = randint(len(simGraph),(len(simGraph)**2)
-        for i in range(len(simGraph.nodes)):
-            for j in range(len(simGraph.nodes)):
-                if i!=j:
-                    simGraph.add_edge(simGraph.nodes[i],simGraph.nodes[j])
+    def connectNodes(self):
+        #numEdges = randint(len(self.nodes),(len(self.nodes)**2))
+        
+        for i in range(len(self.nodes)-1): #USING LINE OF NODES FOR TESTING PURPOSES 
+            self.add_edge(self.nodes[i], self.nodes[i+1])
+
+        

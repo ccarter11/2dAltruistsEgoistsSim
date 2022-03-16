@@ -2,25 +2,24 @@ from numpy import double
 
 
 class node:
-    def __init__(self, node_type, payoff, willChange) -> None:
-        if type(node_type)== 'str':
-            self.node_type = node_type
-
-        if type(payoff) == double:
-            self.payoff= payoff 
+    def __init__(self, label, node_type, payoff, willChange) -> None: #label never changes, node_type may change, payoff and willChange change mid epoch but are reset each time
+        self.label= label 
         
-        if type(willChange) == 'boolean':
-            self.willChange = willChange
+        self.node_type = node_type
+
+        
+        self.payoff= payoff 
+        
+       
+        self.willChange = willChange
 
         self.edges =[]
 
         pass
 
     def updateType(self, newType):
-        if (newType== "A" or newType=="E" or newType== "a" or newType=="e"):
-            self.node_type= newType
-        else:
-            print("Invalid node type")
+        self.node_type= newType
+        
 
     def updatePayoff(self, newPayoff):
         self.payoff += newPayoff
@@ -36,6 +35,12 @@ class node:
 
     def getChange(self):
         return self.willChange
+
+    def getNeighbors(self):
+        return self.edges
+
+    def getLabel(self):
+        return self.label 
 
     
     
