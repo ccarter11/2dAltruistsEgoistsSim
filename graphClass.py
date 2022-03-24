@@ -38,9 +38,14 @@ class graph:
         return node.edges
 
     def connectNodes(self):
-        #numEdges = randint(len(self.nodes),(len(self.nodes)**2))
+        numEdges = random.randint(len(self.nodes),(len(self.nodes)**2))
         
-        for i in range(len(self.nodes)-1): #USING LINE OF NODES FOR TESTING PURPOSES 
-            self.add_edge(self.nodes[i], self.nodes[i+1])
+        # for i in range(len(self.nodes)-1): #USING LINE OF NODES FOR TESTING PURPOSES 
+        #     self.add_edge(self.nodes[i], self.nodes[i+1])
+        while numEdges>0: 
+            node1,node2 = random.randint(0,len(self.nodes)-1), random.randint(0,len(self.nodes)-1)
+            if (self.nodes[node1] != self.nodes[node2]) and ( self.nodes[node2] not in self.nodes[node1].edges) and (self.nodes[node1] not in self.nodes[node2].edges):
+                self.add_edge(self.nodes[node1], self.nodes[node2])
+                numEdges-=1 
 
         

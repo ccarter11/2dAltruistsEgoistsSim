@@ -11,10 +11,11 @@ class altruistEgoistSim2D:
 		nodes = []
 		simGraph = graph(nodes)
 		label = 0
+		endRange = 1/probAltruist
 		for i in range(numNodes):
 			label+= 1 
 			#change based on user input probability
-			nType = random.randint(0,1)
+			nType = random.randint(0,endRange)
 			if nType == 0:
 				nType = 'A'
 			else:
