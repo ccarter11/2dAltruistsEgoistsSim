@@ -7,5 +7,5 @@ test1 = altruistEgoistSim2D(10,.5,.25)
 
 # # print(test1.getnodes)
 # # print(test1.getEdges)
-test1.runSim(4)
+test1.runSim(4,False)
 

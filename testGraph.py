@@ -106,7 +106,11 @@ fig, ax = plt.subplots()
 
 ax.scatter(x, y)
 
-ax.set(xlim=(0, result[0]), xticks=np.arange(0, len(result)+5),
-       ylim=(0, result[1]), yticks=np.arange(0, max(result)+5))
-
+ax.set(xlim=(0, result[0]), xticks=np.arange(0, max(result)+10),
+       ylim=(0, result[1]), yticks=np.arange(0, max(result)+10)
+)
+ax.set_xticks(x[::2])
+#ax.set_xticklabels(x[::2], rotation=45)
+ax.set_yticks(y[::2])
+#ax.set_yticklabels(y[::2], rotation=45)
 plt.show()

@@ -2,22 +2,22 @@
 from graphClass import graph
 from nodeClass import node
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 class altruistEgoistSim2D:
-#…atributes… 
+
 	def __init__(self, numNodes, probAltruist, altruismCost):
-		self.data=[]
-		#self.nodes = numNodes 
-		#self.pAlt= probAltruist
-		nodes = []
-		simGraph = graph(nodes)
-		label = 0
-		rng = probAltruist*100
 		
-		for i in range(numNodes):
+		
+		nodes = []
+		simGraph = graph(nodes) # innitialize empty graph object
+		label = 0
+		rng = probAltruist*100 # set range based on input probability 
+		
+		for i in range(numNodes): # create nodes 
 			label+= 1 
-			#change based on user input probability
-			nType = random.randint(1,100) - rng 
+			nType = random.randint(1,100) - rng #change the chaces of setting agent to altruist based on user input prob
 			if nType <= 0:
 				nType = 'A'
 				
@@ -25,35 +25,22 @@ class altruistEgoistSim2D:
 			else:
 				nType = 'E'
 			
-			simGraph.add_node(label,nType)
-		simGraph.connectNodes()
-		#self.getnodes = simGraph.nodes
+			simGraph.add_node(label,nType) 
+		simGraph.connectNodes()#randomly connect nodes
 		
-		#set random number of edges (and random conections) s.t. numNodes <|E| < numNodes**2
-		# 
-		#to check edges are added properly  
-		for node in simGraph.nodes:
-			gEdges =[]
-			for neighbor in node.edges:
-				gEdges.append(neighbor.getLabel())
-			#print(gEdges)
-				
-					
-			#self.getEdges = isEdges
+		self.data=[] #tracks number of altruists at each epoch 
 		self.simGraph = simGraph
-		self.cost = -altruismCost
+		self.cost = -altruismCost 
 		
-		# for node in self.simGraph.nodes:
-		# 	print(node.willChange())
-		# print(len(self.simGraph.nodes))
+		
 				
 
 				
 
 		
-	#def printNodesEdges():
+	
 
-	def returnNumAlt(self):
+	def returnNumAlt(self):#sum the number of altruists currently in simGraph 
 		numAlts = 0 
 		for node in self.simGraph.nodes:
 			if node.getType()=='A':
@@ -66,7 +53,7 @@ class altruistEgoistSim2D:
 		#for each node in the simGraph, check the type of each neighbor and increment payoff accordingly
 		for node in self.simGraph.nodes:
 			if node.getType()== 'A':
-				node.updatePayoff(self.cost)
+				node.updatePayoff(self.cost)#start with cost of altruism for altruists
 			for neighbor in node.edges: 
 				if neighbor.getType()== 'A':
 					node.updatePayoff(1)
@@ -74,13 +61,15 @@ class altruistEgoistSim2D:
 			#print(node.getLabel(), node.getType(), node.getPayoff())
 
 	def changeNodeType(self):
+		#switch agent type if willChange == true 
 		for node in self.simGraph.nodes:
 			if node.getChange() == True:
 				if node.getType()== 'A':
 					node.updateType('E')
 				elif node.getType()== 'E':
 					node.updateType('A')
-	def reset(self):
+	def reset(self): 
+		#reset agent attributes payoff and willChange to prepare for next epoch 
 		for node in self.simGraph.nodes:
 			node.updatePayoff((-node.getPayoff())) 
 			node.updateChange(False)
@@ -90,11 +79,12 @@ class altruistEgoistSim2D:
 		self.reset()
 		self.calcPayoff() #initialize this epoch's node payoffs
 
-		before=[]
-		after = []
+		
 		for node in self.simGraph.nodes: 
-			altruistPayoff= 0  #track the payoff of the respective types neighboring each node 
+			#track the payoff of the respective types neighboring each node 
+			altruistPayoff= 0  
 			egoistPayoff = 0
+			#number of neighboring altruists and egoists
 			numAlt = 0 
 			numEgo = 0
 		
@@ -127,23 +117,19 @@ class altruistEgoistSim2D:
 			if ((avgAltPO>avgEgoPO) and node.getType() == 'E') or ((avgAltPO<avgEgoPO) and node.getType()=='A') :
 				node.updateChange(True) 
 		
-			before.append(node.getType())
+			
 			#print(node.getLabel(), node.getChange())
+
 		self.returnNumAlt()	
-		# for node in self.simGraph.nodes:
-		# 	print(node.getType())
+		
 
-		#change all nodes' type accordingly
-		self.changeNodeType()
+		#change all nodes' type accordingly for next epoch 
+		self.changeNodeType() 
 
-		for node in self.simGraph.nodes:
-		#print(node.getLabel() , node.getType())
-			after.append(node.getType())
-		# print(before)
-		# print(after)
+	
 
 
-	def  runSim(self,  epochs, genGraph):
+	def  runSim(self,  epochs, genGraph):# run multiple epochs on the same graph, track the number of altruists 
 		for node in self.simGraph.nodes:
 			edges=[]
 			for neighbor in node.edges:
@@ -152,8 +138,49 @@ class altruistEgoistSim2D:
 		#Calls calc epoch 
 		for i in range(epochs): 
 			self.calcEpoch()
-		print(self.data)
-		return self.data
+		result = self.data 
+		if genGraph == True:
+			x = [0] * len(result)
+			y = [0] * len(result)
+
+			for i in range(0, len(result)):
+				x[i] = i
+				y[i] = result[i]
+
+			print("Size of x: ", len(x))
+			print("Size of y: ", len(y))
+			print("Size of result: ", len(result))
+
+			# make the data
+			np.random.seed(5)
+
+			# size and color:
+			sizes = np.random.uniform(15, 80, len(x))
+			colors = np.random.uniform(15, 80, len(x))
+			print("X:", x)
+			print("Y:", y)
+			# plot
+			fig, ax = plt.subplots()
+
+			ax.scatter(x, y)
+
+			ax.set(xlim=(0, result[0]), xticks=np.arange(0, max(result)+10),
+				ylim=(0, result[1]), yticks=np.arange(0, max(result)+10)
+			)
+			ax.set_xticks(x[::2])
+			#ax.set_xticklabels(x[::2], rotation=45)
+			ax.set_yticks(y[::2])
+			#ax.set_yticklabels(y[::2], rotation=45)
+			plt.show()
+		else: 
+			print(result)
+
+	def runSimSet(self, sims, epochs):# run multiple sims at once to get larger scale data 
+			
+
+
+
+
 
 	
 
@@ -166,6 +193,3 @@ class altruistEgoistSim2D:
 		
 
 	
-
-	#def display(data):
-		
