@@ -63,7 +63,7 @@ def calcEpoch(self):#uses calcPayoff to determine if nodes will change type
 		print(after)
 
 result = []
-test1 = altruistEgoistSim2D(20,.1,.25)
+test1 = altruistEgoistSim2D(100,.65,.25)
 
 # print(test1.getnodes)
 # print(test1.getEdges)
@@ -86,7 +86,7 @@ x = [0] * len(result)
 y = [0] * len(result)
 
 for i in range(0, len(result)):
-    x[i] = i+1
+    x[i] = i
     y[i] = result[i]
 
 print("Size of x: ", len(x))

@@ -6,18 +6,22 @@ import random
 class altruistEgoistSim2D:
 #…atributes… 
 	def __init__(self, numNodes, probAltruist, altruismCost):
+		self.data=[]
 		#self.nodes = numNodes 
 		#self.pAlt= probAltruist
 		nodes = []
 		simGraph = graph(nodes)
 		label = 0
-		endRange = 1/probAltruist
+		rng = probAltruist*100
+		
 		for i in range(numNodes):
 			label+= 1 
 			#change based on user input probability
-			nType = random.randint(0,endRange)
-			if nType == 0:
+			nType = random.randint(1,100) - rng 
+			if nType <= 0:
 				nType = 'A'
+				
+				
 			else:
 				nType = 'E'
 			
@@ -38,7 +42,7 @@ class altruistEgoistSim2D:
 			#self.getEdges = isEdges
 		self.simGraph = simGraph
 		self.cost = -altruismCost
-		self.data=[]
+		
 		# for node in self.simGraph.nodes:
 		# 	print(node.willChange())
 		# print(len(self.simGraph.nodes))
@@ -67,7 +71,7 @@ class altruistEgoistSim2D:
 				if neighbor.getType()== 'A':
 					node.updatePayoff(1)
 			
-			print(node.getLabel(), node.getType(), node.getPayoff())
+			#print(node.getLabel(), node.getType(), node.getPayoff())
 
 	def changeNodeType(self):
 		for node in self.simGraph.nodes:
@@ -117,14 +121,14 @@ class altruistEgoistSim2D:
 				numEgo = 1 
 			avgAltPO = altruistPayoff/numAlt
 			avgEgoPO = egoistPayoff/numEgo 
-			print(node.getLabel(), node.getType(),'ALT', avgAltPO, 'EGO', avgEgoPO)
+			#print(node.getLabel(), node.getType(),'ALT', avgAltPO, 'EGO', avgEgoPO)
 
 
 			if ((avgAltPO>avgEgoPO) and node.getType() == 'E') or ((avgAltPO<avgEgoPO) and node.getType()=='A') :
 				node.updateChange(True) 
 		
 			before.append(node.getType())
-			print(node.getLabel(), node.getChange())
+			#print(node.getLabel(), node.getChange())
 		self.returnNumAlt()	
 		# for node in self.simGraph.nodes:
 		# 	print(node.getType())
@@ -135,16 +139,23 @@ class altruistEgoistSim2D:
 		for node in self.simGraph.nodes:
 		#print(node.getLabel() , node.getType())
 			after.append(node.getType())
-		print(before)
-		print(after)
+		# print(before)
+		# print(after)
 
 
-	def  runSim(self,  epochs):
+	def  runSim(self,  epochs, genGraph):
+		for node in self.simGraph.nodes:
+			edges=[]
+			for neighbor in node.edges:
+				edges.append(neighbor.getLabel())
+			print(edges)
 		#Calls calc epoch 
 		for i in range(epochs): 
 			self.calcEpoch()
 		print(self.data)
 		return self.data
+
+	
 
 		# 
 
