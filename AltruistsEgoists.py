@@ -5,7 +5,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-class altruistEgoistSim2D:
+class AESim:
 
 	def __init__(self, numNodes, probAltruist, altruismCost):
 		
@@ -29,6 +29,7 @@ class altruistEgoistSim2D:
 		simGraph.connectNodes()#randomly connect nodes
 		
 		self.data=[] #tracks number of altruists at each epoch 
+		self.data2 = [] #stores data from multiple sims
 		self.simGraph = simGraph
 		self.cost = -altruismCost 
 		
@@ -74,8 +75,8 @@ class altruistEgoistSim2D:
 			node.updatePayoff((-node.getPayoff())) 
 			node.updateChange(False)
 
-	def calcEpoch(self):#uses calcPayoff to determine if nodes will change type 
-
+	def calcEpoch(self,epochNum):#uses calcPayoff to determine if nodes will change type 
+		altruists =[] 
 		self.reset()
 		self.calcPayoff() #initialize this epoch's node payoffs
 
@@ -90,6 +91,7 @@ class altruistEgoistSim2D:
 		
 			#initialize based on current node type
 			if node.getType()== 'A': 
+				altruists.append(node.getLabel())
 				numAlt+= 1 
 				altruistPayoff+= node.getPayoff()
 			else: 
@@ -119,6 +121,8 @@ class altruistEgoistSim2D:
 		
 			
 			#print(node.getLabel(), node.getChange())
+		if altruists != []:
+			print('\n Altruists at epoch',epochNum,':', altruists)
 
 		self.returnNumAlt()	
 		
@@ -130,14 +134,16 @@ class altruistEgoistSim2D:
 
 
 	def  runSim(self,  epochs, genGraph):# run multiple epochs on the same graph, track the number of altruists 
+		print('\n Adjacencies: ')
 		for node in self.simGraph.nodes:
 			edges=[]
 			for neighbor in node.edges:
 				edges.append(neighbor.getLabel())
-			print(edges)
+			print(node.getLabel(),': ',edges)
+			
 		#Calls calc epoch 
 		for i in range(epochs): 
-			self.calcEpoch()
+			self.calcEpoch(i+1)
 		result = self.data 
 		if genGraph == True:
 			x = [0] * len(result)
@@ -147,18 +153,14 @@ class altruistEgoistSim2D:
 				x[i] = i
 				y[i] = result[i]
 
-			print("Size of x: ", len(x))
-			print("Size of y: ", len(y))
-			print("Size of result: ", len(result))
-
+			
 			# make the data
 			np.random.seed(5)
 
 			# size and color:
 			sizes = np.random.uniform(15, 80, len(x))
 			colors = np.random.uniform(15, 80, len(x))
-			print("X:", x)
-			print("Y:", y)
+			
 			# plot
 			fig, ax = plt.subplots()
 
@@ -173,9 +175,9 @@ class altruistEgoistSim2D:
 			#ax.set_yticklabels(y[::2], rotation=45)
 			plt.show()
 		else: 
-			print(result)
+			print('\nResult:',result)
 
-	def runSimSet(self, sims, epochs):# run multiple sims at once to get larger scale data 
+
 			
 
 

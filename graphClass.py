@@ -22,12 +22,7 @@ class graph:
         node1.edges.remove(node2)
         node2.edges.remove(node1)
     
-    # def get_node(self, node_id):  #
-    #     for node in self.nodes:
-    #         if node.id == node_id:
-    #             return node
-    #     return None
-
+    
     #Check if node is connected to another
     def is_connected(self, node1, node2):
         if node1 in node2.edges:
@@ -35,8 +30,7 @@ class graph:
         else:
             return False
 
-    # def get_neighbors(self, node): 
-    #     return node.edges
+   
 
     def connectNodes(self): #set random edges in graph 
         numEdges = random.randint(len(self.nodes),(len(self.nodes)**2)) # pick a random number of edges 

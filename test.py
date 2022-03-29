@@ -1,11 +1,8 @@
-import imp
-from  AltruistsEgoists import altruistEgoistSim2D
-from nodeClass import node
-from graphClass import graph
 
-test1 = altruistEgoistSim2D(10,.5,.25)
+from  AltruistsEgoists import AESim
 
-# # print(test1.getnodes)
-# # print(test1.getEdges)
-test1.runSim(4,False)
+
+test1 = AESim(10,.5,.25)
+test1.runSim(3,True)
+#test1.runSimSet(5,3)
 
