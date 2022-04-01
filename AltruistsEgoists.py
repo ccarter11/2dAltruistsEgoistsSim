@@ -5,7 +5,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-class AESim:
+class AESim:#2D altruist/egoist simulation 
 
 	def __init__(self, numNodes, probAltruist, altruismCost):
 		
@@ -144,7 +144,8 @@ class AESim:
 		#Calls calc epoch 
 		for i in range(epochs): 
 			self.calcEpoch(i+1)
-		result = self.data 
+		result = self.data
+		
 		if genGraph == True:
 			x = [0] * len(result)
 			y = [0] * len(result)
@@ -166,7 +167,7 @@ class AESim:
 
 			ax.scatter(x, y)
 
-			ax.set(xlim=(0, result[0]), xticks=np.arange(0, max(result)+10),
+			ax.set(xlim=(0, len(result)), xticks=np.arange(0, len(result)+1),
 				ylim=(0, result[1]), yticks=np.arange(0, max(result)+10)
 			)
 			ax.set_xticks(x[::2])
@@ -176,6 +177,7 @@ class AESim:
 			plt.show()
 		else: 
 			print('\nResult:',result)
+			return self.data 
 
 
 			
