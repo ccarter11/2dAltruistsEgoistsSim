@@ -4,10 +4,11 @@ from nodeClass import node
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+from pyvis.network import Network
 
 class AESim:#2D altruist/egoist simulation 
 
-	def __init__(self, numNodes, probAltruist, altruismCost):
+	def __init__(self, numNodes, probAltruist, altruismCost, visualize):
 		
 		
 		nodes = []
@@ -25,13 +26,39 @@ class AESim:#2D altruist/egoist simulation
 			else:
 				nType = 'E'
 			
-			simGraph.add_node(label,nType) 
-		simGraph.connectNodes()#randomly connect nodes
+			simGraph.add_node(label,nType)
+		simGraph.connectNodes() 
+		
+
 		
 		self.data=[] #tracks number of altruists at each epoch 
-		self.data2 = [] #stores data from multiple sims
+		# self.data2 = [] #stores data from multiple sims
 		self.simGraph = simGraph
 		self.cost = -altruismCost 
+		self.vis = visualize
+
+		#create network visualization 
+		if visualize==True: 
+			net = Network(height='750px', width='100%', bgcolor='#222222', font_color='white')
+			net.barnes_hut()
+			for i,node in enumerate(self.simGraph.nodes): 
+				if node.getType() == 'A':
+					clr = '#3da831'
+				else: 
+					clr = '#3155a8'
+				net.add_node(str(i+1), color = clr,title = str(node.getLabel()))
+			
+			for node in self.simGraph.nodes: 
+				for neighbor in node.edges:
+					net.add_edge(str(node.getLabel()),str(neighbor.getLabel()))
+			neighbor_map = net.get_adj_list()
+
+# add neighbor data to node hover data
+			for nd in net.nodes:
+				nd['title'] += ' Neighbors:<br>' + '<br>'.join(neighbor_map[nd['id']])
+				nd['value'] = len(neighbor_map[nd['id']])
+			#net.repulsion(200, 10)
+			net.show('network.html')
 		
 		
 				
@@ -133,7 +160,7 @@ class AESim:#2D altruist/egoist simulation
 	
 
 
-	def  runSim(self,  epochs, genGraph):# run multiple epochs on the same graph, track the number of altruists 
+	def  runSim(self,  epochs, gen_graph):# run multiple epochs on the same graph, track the number of altruists 
 		print('\n Adjacencies: ')
 		for node in self.simGraph.nodes:
 			edges=[]
@@ -146,7 +173,8 @@ class AESim:#2D altruist/egoist simulation
 			self.calcEpoch(i+1)
 		result = self.data
 		
-		if genGraph == True:
+		#create data visualization 
+		if gen_graph == True:
 			x = [0] * len(result)
 			y = [0] * len(result)
 
@@ -157,10 +185,8 @@ class AESim:#2D altruist/egoist simulation
 			
 			# make the data
 			np.random.seed(5)
-
-			# size and color:
-			sizes = np.random.uniform(15, 80, len(x))
-			colors = np.random.uniform(15, 80, len(x))
+			
+	
 			
 			# plot
 			fig, ax = plt.subplots()
@@ -168,16 +194,24 @@ class AESim:#2D altruist/egoist simulation
 			ax.scatter(x, y)
 
 			ax.set(xlim=(0, len(result)), xticks=np.arange(0, len(result)+1),
-				ylim=(0, result[1]), yticks=np.arange(0, max(result)+10)
-			)
+				ylim=(0,max(result) ), yticks=np.arange(0, max(result)+10)
+			)#result[1]
+
+			yScale= 25
 			ax.set_xticks(x[::2])
-			#ax.set_xticklabels(x[::2], rotation=45)
-			ax.set_yticks(y[::2])
-			#ax.set_yticklabels(y[::2], rotation=45)
+			#ax.set_yticks(y[::2])
+			
+			
+			ax.set_xlabel('Epochs')
+			ax.set_ylabel('Number of Altruists')
+			
+			plt.plot(x,y)
+			plt.locator_params(axis='y', nbins=yScale)
 			plt.show()
+			
 		else: 
 			print('\nResult:',result)
-			return self.data 
+			return result
 
 
 			

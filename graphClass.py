@@ -31,16 +31,16 @@ class graph:
             return False
 
    
-
-    def connectNodes(self): #set random edges in graph 
-        numEdges = random.randint(len(self.nodes),(len(self.nodes)**2)) # pick a random number of edges 
+#assigns random edges in graph 
+    def connectNodes(self): 
+        numEdges = random.randint(len(self.nodes),(len(self.nodes)**2)) 
         
         for i in range(len(self.nodes)-1): # start with line of nodes to make sure that all agents are connected 
              self.add_edge(self.nodes[i], self.nodes[i+1])
              numEdges-=1
-        while numEdges>0: # if there are some additional edges available, use them to connect random nodes 
-            node1,node2 = random.randint(0,len(self.nodes)-1), random.randint(0,len(self.nodes)-1)#choose two random nodes
-            if (self.nodes[node1] != self.nodes[node2]): # if not the same node 
+        while numEdges>0: # if there are additional edges available, use them to connect random agents  
+            node1,node2 = random.randint(0,len(self.nodes)-1), random.randint(0,len(self.nodes)-1)
+            if (self.nodes[node1] != self.nodes[node2]): 
                 self.add_edge(self.nodes[node1], self.nodes[node2]) #try to add edge
                 if self.nodes[node1] in self.nodes[node2].edges: #if success
                     numEdges-=1 #reduce number of edges 
