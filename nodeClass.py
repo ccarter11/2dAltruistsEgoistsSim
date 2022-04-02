@@ -2,7 +2,7 @@
 
 
 class node:
-    def __init__(self, label, node_type, payoff, willChange) -> None: #label never changes, node_type may change, payoff and willChange change mid epoch but are reset each time
+    def __init__(self, label, node_type, payoff, willChange): #label never changes, node_type may change, payoff and willChange change mid epoch but are reset each time
         self.label= label #keeps track of unique nodes/ agents 
         
         self.node_type = node_type #keeps track of whether the agent is altruist of egoist 
