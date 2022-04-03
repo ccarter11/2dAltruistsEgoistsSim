@@ -44,9 +44,9 @@ class AESim:#2D altruist/egoist simulation
 			labels = []
 			for i,node in enumerate(self.simGraph.nodes): 
 				if node.getType() == 'A':
-					clr = '#3da831'
+					clr = '#90ee90'
 				else: 
-					clr = '#3155a8'
+					clr = '#ADD8E6'
 				label = str(i+1) +':' + node.getType() 
 				labels.append(label)
 				net.add_node(label, color = clr,title = str(node.getLabel()))

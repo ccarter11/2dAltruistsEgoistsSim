@@ -9,5 +9,5 @@ from  AltruistsEgoists import AESim
 #     data.append(curr)
 # print(data)
 
-test2 = AESim(12,.55,.25,True)
-test2.runSim(4,True)
+test2 = AESim(300,.55,.25,True)
+test2.runSim(50,True)
