@@ -41,16 +41,20 @@ class AESim:#2D altruist/egoist simulation
 		if visualize==True: 
 			net = Network(height='750px', width='100%', bgcolor='#222222', font_color='white')
 			net.barnes_hut()
+			labels = []
 			for i,node in enumerate(self.simGraph.nodes): 
 				if node.getType() == 'A':
 					clr = '#3da831'
 				else: 
 					clr = '#3155a8'
-				net.add_node(str(i+1), color = clr,title = str(node.getLabel()))
+				label = str(i+1) +':' + node.getType() 
+				labels.append(label)
+				net.add_node(label, color = clr,title = str(node.getLabel()))
 			
 			for node in self.simGraph.nodes: 
 				for neighbor in node.edges:
-					net.add_edge(str(node.getLabel()),str(neighbor.getLabel()))
+					
+					net.add_edge(labels[node.getLabel()-1],labels[neighbor.getLabel()-1])
 			neighbor_map = net.get_adj_list()
 
 # add neighbor data to node hover data
