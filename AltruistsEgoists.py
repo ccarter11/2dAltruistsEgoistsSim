@@ -60,7 +60,8 @@ class AESim:#2D altruist/egoist simulation
 # add neighbor data to node hover data
 			for nd in net.nodes:
 				nd['title'] += ' Neighbors:<br>' + '<br>'.join(neighbor_map[nd['id']])
-				nd['value'] = len(neighbor_map[nd['id']])
+				#nd['value'] = len(neighbor_map[nd['id']])
+				
 			#net.repulsion(200, 10)
 			net.show('network.html')
 		
