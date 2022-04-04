@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Altruists and Egoists</title>
+
+    <style>
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+        }
+        .centered {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          padding: 10px;
+        }
+
+        @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="d-flex flex-column justify-content-center w-100 h-100">
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1 class="fw-light text-white m-0">Altruists and Egoists network</h1>
+            <br>
+            <br>
+            <br>
+                <form action="/network.html" class="grid" method="POST">
+                  <div class="form-group">
+                    {% if number %}
+                      <h3 style="color: blue;">The value is: </h3> {{number}}
+                    {% endif %}
+                  </div>
+                <div class="form-group">
+                  <label for = "number">Enter a number:</label>
+                  <input type="number" name="num" id="number" min="3" max="300" required>
+                </div>
+                <br>
+                  <center>
+                      <input type="submit" class="btn btn-primary btn-block" class="file_submit" value="Process!">
+                </center>
+                </form>
+                <br>
+                <br>
+                <br>
+            <a href="https://manuel.pinto.dev" class="text-decoration-none">
+                <h5 class="fw-light text-white m-0">— Created by Clayton Carter and Adham Khalifa —</h5>
+            </a>
+
+        </div>
+    </div>
+    </div>
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+
+    <!--Form with a large button to launch the app-->
+    <canvas id="demo"></canvas>
+
+
+  </body>
+</html>
